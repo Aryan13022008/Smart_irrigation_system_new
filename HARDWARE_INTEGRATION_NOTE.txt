@@ -1,0 +1,7 @@
+SMART IRRIGATION HARDWARE INTEGRATION — FIRST STAGE
+
+This archive is a valid ZIP based on your original repository. The ESP32 sketch now prints JSON telemetry at 115200 baud over USB. This stage does not yet connect that stream to Streamlit; serial-reader/dashboard integration must be completed and tested next.
+
+Current sketch pin assumptions (verify against your actual modules): soil AO -> GPIO32 and GPIO33; water-level analog output -> GPIO34; rain module DO -> GPIO27; DHT22 data -> GPIO4. Connect grounds together. Do not feed 5V signals into ESP32 GPIO. Do not connect a pump until its driver and power requirements are identified.
+
+Arduino IDE libraries: Adafruit DHT sensor library and Adafruit Unified Sensor. Python dependencies include pyserial.

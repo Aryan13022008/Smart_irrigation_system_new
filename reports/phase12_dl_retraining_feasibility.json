@@ -1,0 +1,331 @@
+{
+  "audit_metadata": {
+    "project": "/Users/aryanagrawal/ESA_PROJECT",
+    "timestamp_utc": "2026-10-10T14:50:00Z",
+    "phase": "Phase 12: Deep Learning Retraining Feasibility Investigation",
+    "dataset_source": "/Users/aryanagrawal/Downloads/iotsensordata.csv",
+    "mode": "READ_ONLY_INSPECTION_AND_VALIDATION"
+  },
+  "dataset_profile": {
+    "file_path": "/Users/aryanagrawal/Downloads/iotsensordata.csv",
+    "total_rows": 100000,
+    "total_columns": 15,
+    "columns": [
+      "Soil Moisture",
+      "Temperature",
+      " Soil Humidity",
+      "Time",
+      "Air temperature (C)",
+      "Wind speed (Km/h)",
+      "Air humidity (%)",
+      "Wind gust (Km/h)",
+      "Pressure (KPa)",
+      "ph",
+      "rainfall",
+      "N",
+      "P",
+      "K",
+      "Status"
+    ],
+    "target_column": "Status",
+    "target_classes": {
+      "ON": 53650,
+      "OFF": 46350
+    },
+    "target_prevalence_on_pct": 53.65,
+    "missing_values": {
+      "Soil Moisture": 0,
+      "Temperature": 0,
+      " Soil Humidity": 0,
+      "Time": 0,
+      "Status": 0,
+      "Air temperature (C)": 76005,
+      "Wind speed (Km/h)": 76005,
+      "Air humidity (%)": 76005,
+      "Wind gust (Km/h)": 76005,
+      "Pressure (KPa)": 76005,
+      "ph": 97800,
+      "rainfall": 97800,
+      "N": 97800,
+      "P": 97800,
+      "K": 97800
+    },
+    "weather_complete_subset_rows": 23995,
+    "weather_subset_target_distribution": {
+      "ON": 12973,
+      "OFF": 11022,
+      "ON_pct": 54.07,
+      "OFF_pct": 45.93
+    },
+    "timestamp_column": null,
+    "time_column_characteristics": {
+      "name": "Time",
+      "dtype": "int64",
+      "min": 0,
+      "max": 110,
+      "mean": 55.25365,
+      "std": 32.09303,
+      "is_monotonic_increasing": false,
+      "assessment": "Integer simulation counter ranging uniformly from 0 to 110; not a timestamp or datetime"
+    },
+    "chronological_coverage": "None in raw CSV (synthetic Date pd.date_range starting 2022-01-01 was previously fabricated in preprocessing scripts)",
+    "sampling_frequency": "Unspecified / Non-existent in raw data"
+  },
+  "provenance_and_target_verification": {
+    "status_meaning": "UNVERIFIED",
+    "project_documentation_match": false,
+    "documentation_notes": "Project documentation (data/README.txt) covers KU Leuven DRIP experimental field dataset (Belgium, TEROS 10 sensors, ETo), not iotsensordata.csv",
+    "empirical_behavior": {
+      "heuristic_rule_discovered": "If Time > 90.5: Status is ALWAYS OFF (100% of 18,310 rows). If Time <= 90.5 and Soil Moisture <= 59.5: Status is predominantly ON",
+      "simple_2var_rule_accuracy": 0.7834,
+      "decision_tree_4var_accuracy": 0.8965
+    },
+    "assessment": "Status represents an artificial rule-based simulation output or benchmark script rather than verified agronomic field irrigation events"
+  },
+  "sequential_validity_audit": {
+    "is_authentic_time_series": false,
+    "soil_autocorrelations": {
+      "Soil Moisture": {
+        "lag_1": -0.0023,
+        "lag_2": -0.0001,
+        "lag_3": -0.0028,
+        "lag_24": 0.0047
+      },
+      "Temperature_soil": {
+        "lag_1": -0.0011,
+        "lag_2": 0.0103,
+        "lag_24": -0.0037
+      },
+      "Soil Humidity": {
+        "lag_1": 0.0028,
+        "lag_2": 0.0023,
+        "lag_24": -0.0025
+      },
+      "Time": {
+        "lag_1": 0.0023,
+        "lag_2": -0.0015,
+        "lag_24": 0.0030
+      }
+    },
+    "weather_autocorrelations_subset": {
+      "Air temperature (C)": {
+        "lag_1": 0.9992,
+        "lag_24": 0.8107
+      },
+      "Wind speed (Km/h)": {
+        "lag_1": 0.9868,
+        "lag_24": 0.6774
+      },
+      "Air humidity (%)": {
+        "lag_1": 0.9996,
+        "lag_24": 0.8868
+      },
+      "Pressure (KPa)": {
+        "lag_1": 0.9995,
+        "lag_24": 0.8996
+      }
+    },
+    "target_correlations_subset": {
+      "Soil Moisture": -0.3233,
+      "Temperature_soil": 0.3083,
+      "Time": -0.2487,
+      "Soil Humidity": 0.0232,
+      "Air temperature (C)": 0.0097,
+      "Wind speed (Km/h)": 0.0066,
+      "Air humidity (%)": -0.0076,
+      "Wind gust (Km/h)": 0.0032,
+      "Pressure (KPa)": -0.0028
+    },
+    "synthesis_verdict": "The dataset is a synthetic composite: randomly shuffled/i.i.d. soil simulation rows juxtaposed with an independent meteorological weather sequence. The meteorological sequence has zero correlation (r < 0.01) with the target Status."
+  },
+  "live_hardware_constructibility": {
+    "esp32_installed_sensors": [
+      "Calibrated capacitive soil moisture probe 1 (GPIO 32)",
+      "Calibrated capacitive soil moisture probe 2 (GPIO 33)",
+      "DHT22 ambient temperature and air humidity"
+    ],
+    "weather_api_pipeline": [
+      "Open-Meteo current weather (temperature, wind_speed, air_humidity, wind_gust, pressure)"
+    ],
+    "feature_compatibility_matrix": {
+      "soil_moisture": "CONSTRUCTIBLE (with capacitive 0-100% vs CSV 1-90 scale unvalidated)",
+      "temperature": "CONSTRUCTIBLE (from DHT22 or Open-Meteo)",
+      "wind_speed": "CONSTRUCTIBLE (from Open-Meteo)",
+      "air_humidity": "CONSTRUCTIBLE (from DHT22 or Open-Meteo)",
+      "wind_gust": "CONSTRUCTIBLE (from Open-Meteo)",
+      "pressure": "CONSTRUCTIBLE (from Open-Meteo)",
+      "soil_moisture_previous": "CONSTRUCTIBLE (from SQLite history)",
+      "soil_moisture_change": "CONSTRUCTIBLE (from SQLite history)",
+      "temp_previous": "CONSTRUCTIBLE (from SQLite history)",
+      "month_sin": "CONSTRUCTIBLE (from system clock)",
+      "month_cos": "CONSTRUCTIBLE (from system clock)",
+      "Soil Temperature (raw CSV)": "BLOCKED (No physical soil temperature sensor)",
+      "Soil Humidity (raw CSV)": "BLOCKED (No physical soil humidity sensor)",
+      "Time (raw CSV counter)": "BLOCKED (No physical equivalent to random 0-110 integer)",
+      "24-step historical sequence": "PARTIALLY_CONSTRUCTIBLE (requires 24 hours of uninterrupted ESP32 logging; currently 90 min logged)"
+    }
+  },
+  "sequence_construction_and_gap_analysis": {
+    "complete_weather_row_blocks": [
+      {
+        "block": 1,
+        "start_row": 0,
+        "end_row": 8913,
+        "length": 8914,
+        "valid_24step_sequences": 8891
+      },
+      {
+        "gap": 1,
+        "missing_rows": "8914 to 10066 (1153 rows missing in original CSV)"
+      },
+      {
+        "block": 2,
+        "start_row": 10067,
+        "end_row": 16082,
+        "length": 6016,
+        "valid_24step_sequences": 5993
+      },
+      {
+        "gap": 2,
+        "missing_rows": "16083 to 17235 (1153 rows missing in original CSV)"
+      },
+      {
+        "block": 3,
+        "start_row": 17236,
+        "end_row": 26300,
+        "length": 9065,
+        "valid_24step_sequences": 9042
+      }
+    ],
+    "total_valid_block_isolated_sequences": 23926,
+    "naive_dropna_corrupted_boundary_sequences": 46,
+    "sequence_dynamic_assessment": "Because soil moisture autocorrelation is zero, 24-step sliding windows contain 24 independent random draws rather than a physical depletion trajectory."
+  },
+  "leakage_safe_split_design": {
+    "proposed_partitions": {
+      "train": {
+        "rows": 16796,
+        "pct": 70.0,
+        "source_rows": "0 to 16795"
+      },
+      "validation": {
+        "rows": 3599,
+        "pct": 15.0,
+        "source_rows": "16796 to 20394"
+      },
+      "test": {
+        "rows": 3600,
+        "pct": 15.0,
+        "source_rows": "20395 to 23994"
+      }
+    },
+    "embargo_buffer": {
+      "buffer_size_steps": 24,
+      "purpose": "Prevent sliding sequence windows from straddling train/val and val/test partition boundaries"
+    },
+    "scaler_protocol": "StandardScaler.fit() strictly on training sequence inputs; transform() on validation and test",
+    "shuffling_rule": "Strictly chronological; zero random shuffling of sequences prior to split"
+  },
+  "target_and_schema_comparison": {
+    "phase9_model": {
+      "architecture": "HistGradientBoostingClassifier",
+      "input_schema": "Single-step tabular 11-feature vector (ordered)",
+      "target": "Instantaneous Status[t] (0 or 1)",
+      "permutation_importance": {
+        "soil_moisture": 0.17202,
+        "temperature": 0.00172,
+        "temp_previous": 0.00031,
+        "month_sin": 0.00025,
+        "wind_gust": 0.00006,
+        "pressure": -0.00010,
+        "month_cos": -0.00029,
+        "soil_moisture_previous": -0.00076,
+        "wind_speed": -0.00082,
+        "air_humidity": -0.00174,
+        "soil_moisture_change": -0.00235
+      }
+    },
+    "proposed_dl_models": {
+      "input_schema": "3D Tensor (batch, 24, 11)",
+      "target_options": [
+        "Instantaneous Status[t] aligned to end of sequence",
+        "Next-step Status[t+1]"
+      ],
+      "semantic_mismatch": "The target Status has no temporal dependency on past values (soil moisture autocorrelation is -0.002). Feeding 24 historical timesteps provides zero temporal predictive signal and forces neural networks to memorize spurious correlation."
+    }
+  },
+  "data_sufficiency_and_complexity_justification": {
+    "sample_count": 23926,
+    "is_sufficient_for_training": false,
+    "justification": "While 23k samples is numerically sufficient for small neural nets, the signal-to-noise ratio in the temporal dimension is zero. Inductive biases of LSTM, TCN, and Transformer assume temporal coherence and dynamics. On i.i.d. sensor records, deep sequence models risk extreme overfitting and poor generalization compared to simple tree classifiers."
+  },
+  "proposed_training_protocols": {
+    "common_specifications": {
+      "sequence_length": 24,
+      "input_dim": 11,
+      "features": [
+        "soil_moisture",
+        "temperature",
+        "wind_speed",
+        "air_humidity",
+        "wind_gust",
+        "pressure",
+        "soil_moisture_previous",
+        "soil_moisture_change",
+        "temp_previous",
+        "month_sin",
+        "month_cos"
+      ],
+      "target_alignment": "Status at t (end of window)",
+      "loss_function": "BCEWithLogitsLoss",
+      "optimizer": "AdamW (lr=1e-3, weight_decay=1e-4)",
+      "batch_size": 32,
+      "max_epochs": 50,
+      "early_stopping": "Patience 10 epochs on validation PR-AUC",
+      "metrics": ["ROC-AUC", "PR-AUC", "Accuracy", "Precision", "Recall", "F1"],
+      "expected_performance_vs_rf": "Inferior or equivalent to HistGradientBoostingClassifier; zero theoretical advantage"
+    },
+    "lstm_protocol": {
+      "architecture": "LayerNorm(11) -> 2-layer LSTM(hidden=64, dropout=0.3) -> FC(64->32) -> ReLU -> Dropout(0.3) -> FC(32->1)",
+      "parameter_count": 51585
+    },
+    "tcn_protocol": {
+      "architecture": "3 Causal Dilated Residual Blocks (channels=64, 64, 128, kernel=5, dilations=[1, 2, 4]) -> Linear(128->1)",
+      "parameter_count": 198529
+    },
+    "transformer_protocol": {
+      "architecture": "Linear(11->32) -> Sinusoidal PE -> 2-layer TransformerEncoder(d_model=32, nhead=4, d_ff=64) -> Pooling Head -> Linear(32->1)",
+      "parameter_count": 18273
+    }
+  },
+  "architecture_verdicts": {
+    "LSTM": {
+      "decision": "NO-GO",
+      "verdict": "NO-GO",
+      "reason": "Soil moisture has zero autocorrelation (-0.002); 24-step sequences are uncorrelated noise. Recurrent hidden state provides no predictive value over a single-step decision tree."
+    },
+    "TCN": {
+      "decision": "NO-GO",
+      "verdict": "NO-GO",
+      "reason": "Causal convolutions with receptive field > 24 timesteps capture zero genuine temporal dynamics on i.i.d. synthetic data; 198k parameters will overfit spurious weather fluctuations."
+    },
+    "Transformer": {
+      "decision": "NO-GO",
+      "verdict": "NO-GO",
+      "reason": "Self-attention over 24 timesteps of non-sequential soil readings is mathematically ungrounded; quadratic attention computation yields zero domain benefit over tabular gradient boosting."
+    }
+  },
+  "unresolved_assumptions": [
+    "Ground truth definition of 'Status' (heuristic simulator vs physical irrigation)",
+    "Origin and meaning of 'Time' column (0 to 110 integer)",
+    "Domain transferability from iotsensordata.csv integer scale (1-90) to live ESP32 capacitive relative scale (0-100%)",
+    "Physical source and sampling protocol of the stitched meteorological block"
+  ],
+  "recommended_next_steps": [
+    "Maintain training/models/random_forest_11feat.pkl as the sole active advisory model on the dashboard",
+    "Keep automatic pump actuation strictly disabled (PUMP_ALLOWED = False)",
+    "Permanently retire the legacy deep learning models (improved_lstm.pt, tcn.pt, transformer.pt) from operational consideration",
+    "Collect genuine, timestamped continuous time-series sensor logs from the deployed ESP32 and Open-Meteo pipeline before considering sequence modeling in future research phases",
+    "If improved accuracy is required, install an inexpensive DS18B20 soil temperature probe on the ESP32 to restore the 13-feature baseline model (ROC-AUC 0.7927)"
+  ]
+}

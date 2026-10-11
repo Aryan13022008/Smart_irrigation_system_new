@@ -1,0 +1,6 @@
+{
+  "model_type": "TCN",
+  "validation_roc_auc": 0.9107142857142857,
+  "validation_pr_auc": 0.8603007928102844,
+  "optimal_threshold": 0.979947566986084
+}

@@ -1,0 +1,197 @@
+{
+  "audit_metadata": {
+    "project": "/Users/aryanagrawal/ESA_PROJECT",
+    "timestamp_utc": "2026-10-10T14:18:45Z",
+    "phase": "Phase 10: Model Verification (LSTM, TCN, Transformer & Phase 9 Audit)"
+  },
+  "models": {
+    "LSTM": {
+      "artifact_path": "training/models/improved_lstm.pt",
+      "artifact_status": "VERIFIED_SAFE",
+      "architecture": "ImprovedLSTMClassifier(input_size=11, hidden_dim=64, num_layers=2, dropout=0.3, fc1=64->32, fc2=32->1)",
+      "input_dimension": [1, 24, 11],
+      "output_dimension": [1, 1],
+      "training_provenance": {
+        "dataset": "data/irrigation_212223.csv (569 rows)",
+        "features": [
+          "C535CA", "C55D7C", "C54992", "C535C9", "C562C6",
+          "C54986", "C58157", "C54BB2", "2F71D1", "012384F3720B710DEE", "C54762"
+        ],
+        "feature_meaning": "11 historical USDA research station field plot sensors, NOT live ESP32 telemetry",
+        "target": "synthetic_target: (row_volatility > quantile(0.60)) where row_volatility = df[feature_cols].std(axis=1)",
+        "target_meaning": "Spatial variance across field plot sensors; NOT actual crop irrigation status"
+      },
+      "leakage_audit": {
+        "scaling_leakage": "CRITICAL: StandardScaler.fit_transform() executed on full dataset before splitting",
+        "temporal_leakage": "CRITICAL: np.random.shuffle() applied to sliding sequences (window=24, horizon=6)",
+        "chronological_split": "FAILED: Random train/val split (80%/20%)"
+      },
+      "evaluation_audit": {
+        "evaluation_split": "Independent test set (iotsensordata.csv, 5993 samples) evaluated post-hoc",
+        "test_roc_auc": 0.5007855,
+        "test_pr_auc": 0.5439579,
+        "threshold_tuned": 0.38016465,
+        "test_accuracy_at_tuned": 0.5438011,
+        "test_recall_at_tuned": 0.9996932,
+        "test_precision_at_tuned": 0.5438157,
+        "test_f1_at_tuned": 0.7044324,
+        "confusion_matrix_at_tuned": [[1, 2733], [1, 3258]],
+        "assessment": "Near random-chance performance (ROC-AUC ~ 0.5008) due to feature and target semantic divergence"
+      },
+      "inference_audit": {
+        "forward_pass_finite": true,
+        "probability_range_valid": true,
+        "error_handling_invalid_shape": "Caught cleanly with descriptive shape error",
+        "missing_sequence_handling": "Withheld as N/A with explanation"
+      },
+      "live_compatibility": {
+        "status": "INCOMPATIBLE",
+        "reason": "Requires (1, 24, 11) sequence of 11 distinct historical research plots; hardware has only 2 soil probes"
+      },
+      "statuses": {
+        "artifact_verification": "VERIFIED",
+        "evaluation_verification": "VERIFIED_RANDOM_CHANCE",
+        "inference_verification": "VERIFIED_FUNCTIONAL",
+        "live_readiness": "BLOCKED_INCOMPATIBLE"
+      }
+    },
+    "TCN": {
+      "artifact_path": "training/models/tcn.pt",
+      "artifact_status": "VERIFIED_SAFE",
+      "architecture": "TCNClassifier(n_features=11, channels=(64, 64, 128), kernel_size=5, dropout=0.3, linear=128->1)",
+      "input_dimension": [1, 11, 24],
+      "output_dimension": [1, 1],
+      "training_provenance": {
+        "dataset": "data/irrigation_212223.csv (569 rows)",
+        "features": [
+          "C535CA", "C55D7C", "C54992", "C535C9", "C562C6",
+          "C54986", "C58157", "C54BB2", "2F71D1", "012384F3720B710DEE", "C54762"
+        ],
+        "feature_meaning": "11 historical USDA research station field plot sensors",
+        "target": "synthetic_target: (row_volatility > quantile(0.60))",
+        "target_meaning": "Synthetic spatial volatility across plots"
+      },
+      "leakage_audit": {
+        "scaling_leakage": "CRITICAL: StandardScaler.fit_transform() executed on full dataset before splitting",
+        "temporal_leakage": "CRITICAL: np.random.shuffle() applied to sliding sequences before split",
+        "chronological_split": "FAILED: Random train/val split (80%/20%)"
+      },
+      "evaluation_audit": {
+        "evaluation_split": "Validation set ONLY (NO held-out test set evaluated)",
+        "validation_roc_auc": 0.9107143,
+        "validation_pr_auc": 0.8603008,
+        "optimal_threshold": 0.9799476,
+        "test_metrics_available": false,
+        "assessment": "High validation metrics are artifactual due to random shuffle leakage across overlapping sliding windows"
+      },
+      "inference_audit": {
+        "forward_pass_finite": true,
+        "probability_range_valid": true,
+        "error_handling_invalid_shape": "Caught cleanly with group/channel mismatch error",
+        "missing_sequence_handling": "Withheld as N/A with explanation"
+      },
+      "live_compatibility": {
+        "status": "INCOMPATIBLE",
+        "reason": "Requires (1, 24, 11) sequence of 11 distinct research station plot channels"
+      },
+      "statuses": {
+        "artifact_verification": "VERIFIED",
+        "evaluation_verification": "UNVERIFIED_NO_TEST_SPLIT",
+        "inference_verification": "VERIFIED_FUNCTIONAL",
+        "live_readiness": "BLOCKED_INCOMPATIBLE"
+      }
+    },
+    "Transformer": {
+      "artifact_path": "training/models/transformer.pt",
+      "artifact_status": "VERIFIED_SAFE",
+      "architecture": "TransformerClassifier(n_features=11, d_model=32, n_heads=4, n_layers=2, dropout=0.3)",
+      "input_dimension": [1, 24, 11],
+      "output_dimension": [1, 1],
+      "training_provenance": {
+        "dataset": "data/irrigation_212223.csv (569 rows)",
+        "features": [
+          "C535CA", "C55D7C", "C54992", "C535C9", "C562C6",
+          "C54986", "C58157", "C54BB2", "2F71D1", "012384F3720B710DEE", "C54762"
+        ],
+        "feature_meaning": "11 historical USDA research station field plot sensors",
+        "target": "synthetic_target: (row_volatility > quantile(0.60))",
+        "target_meaning": "Synthetic spatial volatility across plots"
+      },
+      "leakage_audit": {
+        "scaling_leakage": "CRITICAL: StandardScaler.fit_transform() executed on full dataset before splitting",
+        "temporal_leakage": "CRITICAL: np.random.shuffle() applied to sliding sequences before split",
+        "chronological_split": "FAILED: Random train/val split (80%/20%)"
+      },
+      "evaluation_audit": {
+        "evaluation_split": "Validation set ONLY (NO held-out test set evaluated)",
+        "validation_roc_auc": 0.9537594,
+        "validation_pr_auc": 0.9291079,
+        "optimal_threshold": 0.6001013,
+        "test_metrics_available": false,
+        "assessment": "Validation score reflects memorization of randomly shuffled overlapping sequence windows"
+      },
+      "inference_audit": {
+        "forward_pass_finite": true,
+        "probability_range_valid": true,
+        "error_handling_invalid_shape": "Caught cleanly with dimension mismatch error",
+        "missing_sequence_handling": "Withheld as N/A with explanation"
+      },
+      "live_compatibility": {
+        "status": "INCOMPATIBLE",
+        "reason": "Requires (1, 24, 11) sequence of 11 distinct research station plot channels"
+      },
+      "statuses": {
+        "artifact_verification": "VERIFIED",
+        "evaluation_verification": "UNVERIFIED_NO_TEST_SPLIT",
+        "inference_verification": "VERIFIED_FUNCTIONAL",
+        "live_readiness": "BLOCKED_INCOMPATIBLE"
+      }
+    }
+  },
+  "phase_9_results_audit": {
+    "script_path": "training/train_11feat_model.py",
+    "model_artifact": "training/models/random_forest_11feat.pkl",
+    "metrics_artifact": "training/models/random_forest_11feat_metrics.json",
+    "bfill_audit": {
+      "nan_indices_before_bfill": [0],
+      "future_leakage_into_test": false,
+      "assessment": "bfill() affected exclusively row 0 of 17,996 in training split (0.0055% of train); zero influence on test partition"
+    },
+    "split_boundary_audit": {
+      "train_split": "Index 0 to 17,995 (17,996 rows, chronological)",
+      "test_split": "Index 17,996 to 23,994 (5,999 rows, chronological)",
+      "boundary_leakage": false,
+      "shift_continuity": "Test row 0 lag correctly accesses training row 17,995 (valid backwards historical continuity)"
+    },
+    "recalculated_metrics_verification": {
+      "default_threshold_0_50": {
+        "accuracy": 0.667278,
+        "precision": 0.659114,
+        "recall": 0.803067,
+        "f1": 0.724004,
+        "roc_auc": 0.680756,
+        "pr_auc": 0.681681,
+        "confusion_matrix": [[1385, 1354], [642, 2618]],
+        "recalculation_matches_reported": true
+      },
+      "tuned_threshold_0_3271": {
+        "accuracy": 0.645108,
+        "precision": 0.626425,
+        "recall": 0.859509,
+        "f1": 0.724686,
+        "roc_auc": 0.680756,
+        "pr_auc": 0.681681,
+        "confusion_matrix": [[1068, 1671], [458, 2802]],
+        "recalculation_matches_reported": true
+      }
+    },
+    "metric_definition_consistency": {
+      "consistent_with_baseline": true,
+      "identical_test_set": true,
+      "sample_count_test": 5999,
+      "baseline_roc_auc": 0.792650,
+      "reduced_roc_auc": 0.680756,
+      "delta_roc_auc": -0.111894
+    }
+  }
+}

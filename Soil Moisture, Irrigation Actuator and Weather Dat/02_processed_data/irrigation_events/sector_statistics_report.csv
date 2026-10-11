@@ -1,0 +1,6 @@
+sector,total_events,total_irrigation,total_fertigation,irrigation_optimal_start,irrigation_optimal_start_percent,fertigation_optimal_start,fertigation_optimal_start_percent,events_longer_2h,percent_longer_2h,events_longer_5h,percent_longer_5h
+1,87,45,42,28,62.22,17,40.48,24,27.59,0,0.0
+2,195,131,64,86,65.65,29,45.31,53,27.18,5,2.56
+3,72,8,64,2,25.0,12,18.75,7,9.72,0,0.0
+4,289,197,92,70,35.53,50,54.35,82,28.37,5,1.73
+5,146,51,95,3,5.88,11,11.58,10,6.85,1,0.68

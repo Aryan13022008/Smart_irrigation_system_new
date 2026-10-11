@@ -1,0 +1,261 @@
+{
+  "phase": 17,
+  "audit_name": "Irrigation Event Validation and Forecasting Audit",
+  "timestamp": "2026-10-10T21:20:00",
+  "reconciliation_task1": {
+    "phase13_test_windows": 6347,
+    "phase14_15_16_test_windows": 6348,
+    "discrepancy_explanation": "Floating-point boundary split difference in Zone 4. Phase 13 used int(n*0.70) and int(n*0.85) resulting in test offset int(n*0.85), while Phase 14/15/16 used int(n*0.70) + int(n*0.15), generating exactly 1 additional test sample. Both evaluate identical distributions with MAE difference < 0.0006%."
+  },
+  "target_audit_task2": {
+    "target_name": "target_mean_24h",
+    "forward_window_steps": 144,
+    "includes_current_observation": true,
+    "current_observation_weight_in_target": "1/144 = 0.694%",
+    "sequence_causality": "Strictly causal (rows i-23 to i input; target is mean of rows i to i+143)",
+    "future_data_leakage_in_features": false,
+    "excluded_leaking_features": [
+      "water_vol_to_24h",
+      "real_moisture_delta"
+    ]
+  },
+  "event_characterization_task3": {
+    "1": {
+      "total_events": 87,
+      "initial_humidity_mean": 39.2183908045977,
+      "final_humidity_mean": 46.28735632183908,
+      "delta_humidity_mean": 7.068965517241379,
+      "delta_humidity_std": 12.745079400199973,
+      "positive_delta_count": 44,
+      "zero_delta_count": 22,
+      "negative_delta_count": 21,
+      "positive_delta_pct": 50.57471264367817,
+      "stop_reasons": {
+        "fertigation_timeout": 45,
+        "physical_valve_closure": 24,
+        "time_restriction": 10,
+        "humidity_threshold": 8
+      },
+      "event_types": {
+        "standard_irrigation": 45,
+        "fertigation": 42
+      }
+    },
+    "2": {
+      "total_events": 195,
+      "initial_humidity_mean": 38.0,
+      "final_humidity_mean": 40.67179487179487,
+      "delta_humidity_mean": 2.6717948717948716,
+      "delta_humidity_std": 8.518323146961263,
+      "positive_delta_count": 66,
+      "zero_delta_count": 86,
+      "negative_delta_count": 43,
+      "positive_delta_pct": 33.84615384615385,
+      "stop_reasons": {
+        "physical_valve_closure": 89,
+        "fertigation_timeout": 82,
+        "time_restriction": 18,
+        "humidity_threshold": 6
+      },
+      "event_types": {
+        "standard_irrigation": 131,
+        "fertigation": 64
+      }
+    },
+    "3": {
+      "total_events": 72,
+      "initial_humidity_mean": 83.52777777777777,
+      "final_humidity_mean": 91.26388888888889,
+      "delta_humidity_mean": 7.736111111111111,
+      "delta_humidity_std": 11.306227942923298,
+      "positive_delta_count": 44,
+      "zero_delta_count": 20,
+      "negative_delta_count": 8,
+      "positive_delta_pct": 61.111111111111114,
+      "stop_reasons": {
+        "fertigation_timeout": 63,
+        "time_restriction": 5,
+        "physical_valve_closure": 4
+      },
+      "event_types": {
+        "fertigation": 64,
+        "standard_irrigation": 8
+      }
+    },
+    "4": {
+      "total_events": 289,
+      "initial_humidity_mean": 77.71626297577855,
+      "final_humidity_mean": 80.3529411764706,
+      "delta_humidity_mean": 2.6366782006920415,
+      "delta_humidity_std": 7.744364261592073,
+      "positive_delta_count": 131,
+      "zero_delta_count": 102,
+      "negative_delta_count": 56,
+      "positive_delta_pct": 45.32871972318339,
+      "stop_reasons": {
+        "physical_valve_closure": 146,
+        "fertigation_timeout": 110,
+        "time_restriction": 22,
+        "humidity_threshold": 11
+      },
+      "event_types": {
+        "standard_irrigation": 197,
+        "fertigation": 92
+      }
+    },
+    "5": {
+      "total_events": 146,
+      "initial_humidity_mean": 68.26027397260275,
+      "final_humidity_mean": 76.55479452054794,
+      "delta_humidity_mean": 8.294520547945206,
+      "delta_humidity_std": 12.719882784224172,
+      "positive_delta_count": 68,
+      "zero_delta_count": 57,
+      "negative_delta_count": 21,
+      "positive_delta_pct": 46.57534246575342,
+      "stop_reasons": {
+        "fertigation_timeout": 117,
+        "physical_valve_closure": 19,
+        "humidity_threshold": 6,
+        "time_restriction": 4
+      },
+      "event_types": {
+        "fertigation": 95,
+        "standard_irrigation": 51
+      }
+    }
+  },
+  "split_evaluation_regimes_task4": {
+    "test_split": {
+      "n_total": 6348,
+      "n_with_future_irr": 0,
+      "n_quiescent": 6348,
+      "overall": {
+        "persistence": {
+          "mae": 0.41243851956871797,
+          "rmse": 0.7640675734643718,
+          "r2": 0.9986303619039265
+        },
+        "lstm": {
+          "mae": 3.866465470482553,
+          "rmse": 5.1434011846059216,
+          "r2": 0.9379355243542117
+        },
+        "tcn": {
+          "mae": 4.6903770209477145,
+          "rmse": 7.697685805899635,
+          "r2": 0.8609846841463809
+        },
+        "transformer": {
+          "mae": 6.123714332627972,
+          "rmse": 8.705727623586203,
+          "r2": 0.8221915320470814
+        }
+      },
+      "during_quiescent_dry": {
+        "n": 6348,
+        "persistence": {
+          "mae": 0.41243851956871797,
+          "rmse": 0.7640675734643718,
+          "r2": 0.9986303619039265
+        },
+        "lstm": {
+          "mae": 3.866465470482553,
+          "rmse": 5.1434011846059216,
+          "r2": 0.9379355243542117
+        },
+        "tcn": {
+          "mae": 4.6903770209477145,
+          "rmse": 7.697685805899635,
+          "r2": 0.8609846841463809
+        },
+        "transformer": {
+          "mae": 6.123714332627972,
+          "rmse": 8.705727623586203,
+          "r2": 0.8221915320470814
+        }
+      }
+    },
+    "val_split": {
+      "n_total": 6326,
+      "n_with_future_irr": 527,
+      "n_quiescent": 5799,
+      "overall": {
+        "persistence": {
+          "mae": 1.25024822428278,
+          "rmse": 2.3666587259513245,
+          "r2": 0.9901494617345814
+        },
+        "lstm": {
+          "mae": 2.762968952632963,
+          "rmse": 4.557601881091875,
+          "r2": 0.9634690084645001
+        },
+        "tcn": {
+          "mae": 2.563734657866397,
+          "rmse": 5.203221412353485,
+          "r2": 0.9523861496837074
+        },
+        "transformer": {
+          "mae": 4.046539137993707,
+          "rmse": 5.981225805476738,
+          "r2": 0.937082843683659
+        }
+      },
+      "during_future_irrigation": {
+        "n": 527,
+        "persistence": {
+          "mae": 3.628735768500949,
+          "rmse": 4.461533802353199,
+          "r2": -0.14955644129117096
+        },
+        "lstm": {
+          "mae": 2.4730245424126256,
+          "rmse": 4.025426358878441,
+          "r2": 0.06419427888161688
+        },
+        "tcn": {
+          "mae": 2.616171488398971,
+          "rmse": 3.213576781982134,
+          "r2": 0.4035977327840712
+        },
+        "transformer": {
+          "mae": 0.7119117630651524,
+          "rmse": 1.2432812400897646,
+          "r2": 0.9107309968647194
+        }
+      },
+      "during_quiescent_dry": {
+        "n": 5799,
+        "persistence": {
+          "mae": 1.0340966574948898,
+          "rmse": 2.0739188151205075,
+          "r2": 0.9899396788615843
+        },
+        "lstm": {
+          "mae": 2.7893184446464336,
+          "rmse": 4.602915935230669,
+          "r2": 0.950444207311751
+        },
+        "tcn": {
+          "mae": 2.5589693173437786,
+          "rmse": 5.347465886062548,
+          "r2": 0.9331156691859147
+        },
+        "transformer": {
+          "mae": 4.349582529369349,
+          "rmse": 6.2358435468170335,
+          "r2": 0.9090466369720366
+        }
+      }
+    },
+    "key_discovery": "The apparent dominance of the persistence baseline on the test set is an artifact of split timing. The chronological test set has 0.0% future irrigation (post-season quiescence), where soil moisture is stationary and persistence achieves 0.412% MAE. In contrast, during active future irrigation in the validation split (N=527), persistence error degrades to 3.629%, while the Transformer achieves 0.712% MAE, LSTM achieves 2.473%, and TCN achieves 2.616%."
+  },
+  "production_compatibility_task5": {
+    "esp32_sensor_type": "Dual capacitive soil moisture probes (GPIO 32, GPIO 33)",
+    "esp32_calibration": "Two-point relative air/water index (dry ADC -> 0%, submerged water ADC -> 100%)",
+    "dataset_sensor_type": "Commercial agricultural capacitive probes (SUT*) installed in Apulia field trial (0-18 cm depth)",
+    "dataset_scale": "Soil water-retention relative index calibrated to soil texture (wilting point 20%, field capacity 60-80%)",
+    "physical_mismatch": "The 0-100% relative index of pure air/water is physically decoupled from soil volumetric water content (VWC) and field capacity retention curves. Automatic pump actuation must remain locked (PUMP_ALLOWED=False)."
+  }
+}

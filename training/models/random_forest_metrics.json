@@ -1,0 +1,77 @@
+{
+  "model_type": "hist_gradient_boosting",
+  "features": [
+    "soil_moisture",
+    "soil_temperature",
+    "soil_humidity",
+    "temperature",
+    "wind_speed",
+    "air_humidity",
+    "wind_gust",
+    "pressure",
+    "soil_moisture_previous",
+    "soil_moisture_change",
+    "temp_previous",
+    "month_sin",
+    "month_cos"
+  ],
+  "feature_medians": {
+    "soil_moisture": 45.0,
+    "soil_temperature": 23.0,
+    "soil_humidity": 45.0,
+    "temperature": 22.384999999999998,
+    "wind_speed": 9.24,
+    "air_humidity": 54.44,
+    "wind_gust": 36.92,
+    "pressure": 101.16,
+    "soil_moisture_previous": 45.0,
+    "soil_moisture_change": 1.0,
+    "temp_previous": 22.38,
+    "month_sin": 1.2246467991473532e-16,
+    "month_cos": 6.123233995736766e-17
+  },
+  "threshold_default": 0.5,
+  "threshold_tuned": 0.3252371189861197,
+  "validation": {
+    "f1": 0.783145350073997,
+    "precision": 0.6742396482227923,
+    "recall": 0.934010152284264
+  },
+  "test_at_default_threshold": {
+    "accuracy": 0.7302883813968994,
+    "precision": 0.7540222772277227,
+    "recall": 0.7475460122699387,
+    "f1": 0.7507701786814541,
+    "roc_auc": 0.7926503000288943,
+    "pr_auc": 0.7712121958703149,
+    "confusion_matrix": [
+      [
+        1944,
+        795
+      ],
+      [
+        823,
+        2437
+      ]
+    ]
+  },
+  "test_at_tuned_threshold": {
+    "accuracy": 0.7069511585264211,
+    "precision": 0.6644045534150613,
+    "recall": 0.9309815950920245,
+    "f1": 0.7754215636177824,
+    "roc_auc": 0.7926503000288943,
+    "pr_auc": 0.7712121958703149,
+    "confusion_matrix": [
+      [
+        1206,
+        1533
+      ],
+      [
+        225,
+        3035
+      ]
+    ]
+  },
+  "feature_importance": null
+}

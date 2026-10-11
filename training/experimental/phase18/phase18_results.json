@@ -1,0 +1,384 @@
+{
+  "phase": 18,
+  "task": "Transformer Irrigation-Event Validation",
+  "timestamp": "2026-10-10T21:25:00",
+  "task1_reproduction": {
+    "status": "EXACT_REPRODUCTION_CONFIRMED",
+    "n_total": 527,
+    "n_sector_4": 477,
+    "n_sector_5": 50,
+    "overall_metrics": {
+      "persistence": {
+        "mae": 3.628735768500949,
+        "rmse": 4.461533802353199,
+        "r2": -0.14955644129117096
+      },
+      "lstm": {
+        "mae": 2.4730245424126256,
+        "rmse": 4.025426358878441,
+        "r2": 0.06419427888161688
+      },
+      "tcn": {
+        "mae": 2.616171488398971,
+        "rmse": 3.213576781982134,
+        "r2": 0.4035977327840712
+      },
+      "transformer": {
+        "mae": 0.7119117051570344,
+        "rmse": 1.2432810298716384,
+        "r2": 0.9107310270525165
+      }
+    },
+    "per_sector_metrics": {
+      "4": {
+        "n": 477,
+        "target_mean": 79.04085866526904,
+        "target_std": 0.7254576750597872,
+        "current_moisture_mean": 79.16037735849056,
+        "current_moisture_std": 4.052584425827561,
+        "persistence": {
+          "mae": 3.404226356860004,
+          "rmse": 4.280599714436265,
+          "r2": -33.81649729511678
+        },
+        "lstm": {
+          "mae": 2.5510431143500543,
+          "rmse": 4.1734775750634965,
+          "r2": -32.09573337279263
+        },
+        "tcn": {
+          "mae": 2.5574888100080937,
+          "rmse": 3.2054303066684984,
+          "r2": -18.523088279881865
+        },
+        "transformer": {
+          "mae": 0.6326562369200225,
+          "rmse": 1.1766620730224966,
+          "r2": -1.630748618104044
+        }
+      },
+      "5": {
+        "n": 50,
+        "target_mean": 65.05055555555556,
+        "target_std": 0.5721405348921423,
+        "current_moisture_mean": 59.28,
+        "current_moisture_std": 0.8009993757800314,
+        "persistence": {
+          "mae": 5.770555555555557,
+          "rmse": 5.915672272332365,
+          "r2": -105.90617148806622
+        },
+        "lstm": {
+          "mae": 1.728727366129557,
+          "rmse": 2.1503150755547518,
+          "r2": -13.125335248548826
+        },
+        "tcn": {
+          "mae": 3.1760042402479396,
+          "rmse": 3.2902802481659013,
+          "r2": -32.07199132862533
+        },
+        "transformer": {
+          "mae": 1.46800887213813,
+          "rmse": 1.7560552643812004,
+          "r2": -8.420434264007085
+        }
+      }
+    }
+  },
+  "task2_event_audit": {
+    "total_events_in_validation_horizon": 8,
+    "events": [
+      {
+        "event_id": 639,
+        "sector": 4,
+        "start": "2025-08-28 14:01:00",
+        "end": "2025-08-28 14:16:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 81.0,
+        "final_humidity": 87.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 640,
+        "sector": 4,
+        "start": "2025-08-29 14:21:00",
+        "end": "2025-08-29 14:36:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 82.0,
+        "final_humidity": 90.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 641,
+        "sector": 4,
+        "start": "2025-08-30 14:42:00",
+        "end": "2025-08-30 14:57:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 81.0,
+        "final_humidity": 84.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 642,
+        "sector": 4,
+        "start": "2025-08-31 15:01:00",
+        "end": "2025-08-31 15:16:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 80.0,
+        "final_humidity": 90.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 785,
+        "sector": 5,
+        "start": "2025-08-27 14:51:00",
+        "end": "2025-08-27 15:06:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 73.0,
+        "final_humidity": 97.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 786,
+        "sector": 5,
+        "start": "2025-08-28 15:12:00",
+        "end": "2025-08-28 15:27:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 73.0,
+        "final_humidity": 97.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 787,
+        "sector": 5,
+        "start": "2025-08-29 15:31:00",
+        "end": "2025-08-29 15:46:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 73.0,
+        "final_humidity": 97.0,
+        "is_raw": true
+      },
+      {
+        "event_id": 788,
+        "sector": 5,
+        "start": "2025-08-30 16:00:00",
+        "end": "2025-08-30 16:15:00",
+        "type": "fertigation",
+        "stop_reason": "fertigation_timeout",
+        "initial_humidity": 73.0,
+        "final_humidity": 98.0,
+        "is_raw": true
+      }
+    ],
+    "label_provenance": "100% physically observed raw valve and fertigation unit transitions (is_raw = True)",
+    "event_types": "100% fertigation pulses (15-minute scheduled nutrient delivery)",
+    "standard_irrigation_events": 0
+  },
+  "task3_leakage_audit": {
+    "feature_sequence_causality": "Strictly causal (rows i-23 to i)",
+    "target_window_horizon": "Forward rolling mean (rows i to i+143)",
+    "overlap_fraction_inputs": "95.8% (23 of 24 steps shared between adjacent windows)",
+    "overlap_fraction_targets": "99.3% (143 of 144 steps shared between adjacent windows)",
+    "sample_independence": "Low independence; 527 rolling windows represent only 6 distinct daily blocks"
+  },
+  "task4_robustness_and_bootstrap": {
+    "n_blocks": 6,
+    "blocks": {
+      "0": {
+        "sector": 4,
+        "date": "2025-08-28",
+        "n": 122,
+        "persistence": {
+          "mae": 2.7946835154826926,
+          "rmse": 3.796772470626963,
+          "r2": -1598.1953616283176
+        },
+        "lstm": {
+          "mae": 2.1081688886131733,
+          "rmse": 2.113926797199229,
+          "r2": -494.73806337820497
+        },
+        "tcn": {
+          "mae": 1.756223543094154,
+          "rmse": 2.128040426016891,
+          "r2": -501.3797499599975
+        },
+        "transformer": {
+          "mae": 0.20184240705979922,
+          "rmse": 0.31766752863485315,
+          "r2": -10.194843490299123
+        }
+      },
+      "1": {
+        "sector": 4,
+        "date": "2025-08-29",
+        "n": 144,
+        "persistence": {
+          "mae": 3.2819010416666674,
+          "rmse": 4.1968584385018115,
+          "r2": -3832.1488421333106
+        },
+        "lstm": {
+          "mae": 2.4023149572772744,
+          "rmse": 2.409354760362132,
+          "r2": -1262.3059604378489
+        },
+        "tcn": {
+          "mae": 2.4472395225807477,
+          "rmse": 2.765697116822184,
+          "r2": -1663.62447638686
+        },
+        "transformer": {
+          "mae": 0.3382122428328905,
+          "rmse": 0.3727722032969684,
+          "r2": -29.240856230103322
+        }
+      },
+      "2": {
+        "sector": 4,
+        "date": "2025-08-30",
+        "n": 119,
+        "persistence": {
+          "mae": 3.050215919701214,
+          "rmse": 3.767164145457588,
+          "r2": -5825.214709488904
+        },
+        "lstm": {
+          "mae": 3.8489658629972165,
+          "rmse": 7.444138132864136,
+          "r2": -22749.253691137346
+        },
+        "tcn": {
+          "mae": 3.0359533685707363,
+          "rmse": 3.828937386126232,
+          "r2": -6017.855629508527
+        },
+        "transformer": {
+          "mae": 0.8156545943572737,
+          "rmse": 1.6149387986815067,
+          "r2": -1069.704269387351
+        }
+      },
+      "3": {
+        "sector": 4,
+        "date": "2025-08-31",
+        "n": 92,
+        "persistence": {
+          "mae": 4.86190368357488,
+          "rmse": 5.473735733885828,
+          "r2": -14.908350404651925
+        },
+        "lstm": {
+          "mae": 1.6922898868431795,
+          "rmse": 1.9020561250997048,
+          "r2": -0.920897323109676
+        },
+        "tcn": {
+          "mae": 3.173716826139442,
+          "rmse": 4.04121383244299,
+          "r2": -7.671239017598657
+        },
+        "transformer": {
+          "mae": 1.42811730057721,
+          "rmse": 1.858429195757104,
+          "r2": -0.8337897247476198
+        }
+      },
+      "4": {
+        "sector": 5,
+        "date": "2025-08-29",
+        "n": 13,
+        "persistence": {
+          "mae": 4.528311965811967,
+          "rmse": 4.542366203085621,
+          "r2": -1291182.4464291588
+        },
+        "lstm": {
+          "mae": 3.5611127543653165,
+          "rmse": 3.5620918817808467,
+          "r2": -794023.4890650227
+        },
+        "tcn": {
+          "mae": 2.391925094474076,
+          "rmse": 2.4055926994710326,
+          "r2": -362131.7944740339
+        },
+        "transformer": {
+          "mae": 0.6927275046324133,
+          "rmse": 0.7595707041078691,
+          "r2": -36103.395167940216
+        }
+      },
+      "5": {
+        "sector": 5,
+        "date": "2025-08-30",
+        "n": 37,
+        "persistence": {
+          "mae": 6.20701951951952,
+          "rmse": 6.3278209013076285,
+          "r2": -104.95350122254077
+        },
+        "lstm": {
+          "mae": 1.084916283776452,
+          "rmse": 1.3380326900085362,
+          "r2": -3.7374037898014745
+        },
+        "tcn": {
+          "mae": 3.4514915076819985,
+          "rmse": 3.5491446038668086,
+          "r2": -32.33146050087301
+        },
+        "transformer": {
+          "mae": 1.740405028288787,
+          "rmse": 1.9911030833064474,
+          "r2": -9.49045789356926
+        }
+      }
+    },
+    "block_bootstrap_1000_resamples": {
+      "persistence": {
+        "mean_mae": 3.6883846838370165,
+        "ci_95": [
+          3.058440371762739,
+          4.553611314561633
+        ]
+      },
+      "lstm": {
+        "mean_mae": 2.4489619685484905,
+        "ci_95": [
+          1.8375051721709383,
+          3.1716160104525666
+        ]
+      },
+      "tcn": {
+        "mean_mae": 2.630238642517263,
+        "ci_95": [
+          2.1523590184738253,
+          3.150909201074021
+        ]
+      },
+      "transformer": {
+        "mean_mae": 0.7386972750795449,
+        "ci_95": [
+          0.37235474565371046,
+          1.2759792556110612
+        ]
+      }
+    },
+    "robustness_finding": "Transformer outperforms persistence in all 6 blocks with non-overlapping 95% CIs [0.37%, 1.28%] vs [3.06%, 4.55%]. However, results are heavily concentrated in Sector 4 (90.5%) and limited to fertigation pulses."
+  },
+  "task5_chronological_holdout_feasibility": {
+    "alternative_unseen_event_rich_periods_available": false,
+    "explanation": "In the existing 70/15/15 split, all other active irrigation periods (February-August) reside within the 70% training split. The remaining held-out test split (September) has zero irrigation events. No other un-trained event-rich period exists in this dataset without retraining.",
+    "verdict": "RESEARCH_VALUABLE_BUT_NOT_PRODUCTION_READY",
+    "recommendation": "Retain random_forest_11feat.pkl as active model; maintain PUMP_ALLOWED=False; collect dedicated multi-season event-rich test data before any operational deployment."
+  }
+}

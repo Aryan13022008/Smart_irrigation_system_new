@@ -1,0 +1,8 @@
+# Preprocessing pipeline only (stages 00-02). Python 3.11 or later.
+#
+# Pinned to the versions used to generate the published tables. The pipeline
+# uses no version-specific behaviour and runs on any recent release of these
+# three packages.
+pandas==3.0.2
+numpy==2.4.4
+requests==2.33.1

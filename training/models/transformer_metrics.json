@@ -1,0 +1,6 @@
+{
+  "model_type": "Transformer",
+  "validation_roc_auc": 0.9537593984962406,
+  "validation_pr_auc": 0.9291078576911924,
+  "optimal_threshold": 0.6001012921333313
+}

@@ -1,0 +1,217 @@
+{
+  "phase": 13,
+  "task": "24-step (4-hour) history -> target_mean_24h forecasting",
+  "target_definition": "Dataset-provided target_mean_24h; provenance/alignment not independently validated, therefore experimental only",
+  "sequence_length": 24,
+  "cadence_minutes": 10,
+  "features": [
+    "weather_temp",
+    "weather_humidity",
+    "weather_rain",
+    "weather_pressure",
+    "weather_wind_speed",
+    "weather_radiation",
+    "soil_temperature_0-7cm",
+    "soil_temperature_7-18cm",
+    "ec",
+    "ph",
+    "soil_moisture",
+    "irrigation_duration_minutes",
+    "hour",
+    "month"
+  ],
+  "scaler": "StandardScaler fit on training rows only",
+  "split": "Within each sector chronologically 70% train / 15% validation / 15% test; windows contained within split; only exact 10-minute contiguous windows; sectors not concatenated",
+  "window_counts": {
+    "train": 14208,
+    "val": 6327,
+    "test": 6347
+  },
+  "sector_rows": {
+    "1": 9531,
+    "2": 11929,
+    "3": 1118,
+    "4": 12676,
+    "5": 11814
+  },
+  "train_target_mean": 45.305171966552734,
+  "train_target_std": 27.913616180419922,
+  "models": [
+    {
+      "model": "LSTM",
+      "epochs_trained": 13,
+      "best_validation_mse": 20.768537521362305,
+      "test_n": 6347,
+      "test_MAE": 3.8670389652252197,
+      "test_RMSE": 5.143805450474298,
+      "test_R2": 0.9379351735115051,
+      "test_baseline_last_observed_mae": null,
+      "parameters": 6689,
+      "history": [
+        {
+          "epoch": 1,
+          "val_mse": 1540.97802734375
+        },
+        {
+          "epoch": 2,
+          "val_mse": 1142.5159912109375
+        },
+        {
+          "epoch": 3,
+          "val_mse": 821.9137573242188
+        },
+        {
+          "epoch": 4,
+          "val_mse": 608.57275390625
+        },
+        {
+          "epoch": 5,
+          "val_mse": 591.4511108398438
+        },
+        {
+          "epoch": 6,
+          "val_mse": 447.0572204589844
+        },
+        {
+          "epoch": 7,
+          "val_mse": 44.66548538208008
+        },
+        {
+          "epoch": 8,
+          "val_mse": 20.768537521362305
+        },
+        {
+          "epoch": 9,
+          "val_mse": 25.63611602783203
+        },
+        {
+          "epoch": 10,
+          "val_mse": 27.106502532958984
+        },
+        {
+          "epoch": 11,
+          "val_mse": 30.126338958740234
+        },
+        {
+          "epoch": 12,
+          "val_mse": 28.058963775634766
+        },
+        {
+          "epoch": 13,
+          "val_mse": 30.24772834777832
+        }
+      ],
+      "baseline_current_soil_moisture_MAE": 0.4124225355811144,
+      "baseline_current_soil_moisture_RMSE": 0.7641005364645135,
+      "baseline_comparison_note": "Same test windows; persistence baseline uses current soil_moisture to predict target_mean_24h."
+    },
+    {
+      "model": "TCN",
+      "epochs_trained": 23,
+      "best_validation_mse": 27.069576263427734,
+      "test_n": 6347,
+      "test_MAE": 4.690904140472412,
+      "test_RMSE": 7.698273839308424,
+      "test_R2": 0.8609845638275146,
+      "test_baseline_last_observed_mae": null,
+      "parameters": 17921,
+      "history": [
+        {
+          "epoch": 1,
+          "val_mse": 271.16845703125
+        },
+        {
+          "epoch": 2,
+          "val_mse": 160.8330535888672
+        },
+        {
+          "epoch": 3,
+          "val_mse": 113.50592803955078
+        },
+        {
+          "epoch": 4,
+          "val_mse": 80.92847442626953
+        },
+        {
+          "epoch": 5,
+          "val_mse": 79.76323699951172
+        },
+        {
+          "epoch": 6,
+          "val_mse": 71.43958282470703
+        },
+        {
+          "epoch": 7,
+          "val_mse": 53.85731887817383
+        },
+        {
+          "epoch": 8,
+          "val_mse": 55.06302261352539
+        },
+        {
+          "epoch": 9,
+          "val_mse": 46.77037811279297
+        },
+        {
+          "epoch": 10,
+          "val_mse": 40.99797821044922
+        },
+        {
+          "epoch": 11,
+          "val_mse": 39.451271057128906
+        },
+        {
+          "epoch": 12,
+          "val_mse": 41.72649002075195
+        },
+        {
+          "epoch": 13,
+          "val_mse": 41.4103889465332
+        },
+        {
+          "epoch": 14,
+          "val_mse": 39.24585723876953
+        },
+        {
+          "epoch": 15,
+          "val_mse": 32.67481994628906
+        },
+        {
+          "epoch": 16,
+          "val_mse": 34.07071304321289
+        },
+        {
+          "epoch": 17,
+          "val_mse": 31.71923065185547
+        },
+        {
+          "epoch": 18,
+          "val_mse": 27.069576263427734
+        },
+        {
+          "epoch": 19,
+          "val_mse": 31.117408752441406
+        },
+        {
+          "epoch": 20,
+          "val_mse": 37.079322814941406
+        },
+        {
+          "epoch": 21,
+          "val_mse": 38.2181510925293
+        },
+        {
+          "epoch": 22,
+          "val_mse": 36.68580627441406
+        },
+        {
+          "epoch": 23,
+          "val_mse": 36.34825134277344
+        }
+      ],
+      "baseline_current_soil_moisture_MAE": 0.4124225355811144,
+      "baseline_current_soil_moisture_RMSE": 0.7641005364645135,
+      "baseline_comparison_note": "Same test windows; persistence baseline uses current soil_moisture to predict target_mean_24h."
+    }
+  ]
+}

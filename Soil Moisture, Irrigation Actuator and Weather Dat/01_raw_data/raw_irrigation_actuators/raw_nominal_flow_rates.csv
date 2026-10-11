@@ -1,0 +1,11 @@
+,fk_iot_node,fk_channel,nominal_flow_rate,content,type,pk_company,unit
+0,AFIRR00001,1.0,1.32,miscela N,fertilizzante,1,L/min
+1,AFIRR00001,2.0,1.32,miscela P,fertilizzante,1,L/min
+2,AFIRR00001,3.0,1.32,miscela K,fertilizzante,1,L/min
+3,AFIRR00001,4.0,1.32,miscela PH,fertilizzante,1,L/min
+4,AIRR00001,__NA__,1.1,fertirrigazione,campo,1,L/min
+5,AIRR00002,__NA__,1.1,fertirrigazione,campo,1,L/min
+6,AIRR00003,__NA__,1.1,fertirrigazione,campo,1,L/min
+7,AIRR00004,__NA__,1.1,fertirrigazione,campo,1,L/min
+8,AIRR00005,__NA__,1.1,fertirrigazione,campo,1,L/min
+9,AIRR00006,__NA__,1.1,fertirrigazione,campo,1,L/min

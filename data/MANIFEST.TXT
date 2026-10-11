@@ -1,0 +1,7 @@
+ETo_212223.csv (text/comma-separated-values) 46547 bytes.
+sensordata2021_2022_2023.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) 4959980 bytes.
+soilsampmeas_212223.csv (text/comma-separated-values) 10623 bytes.
+precipitation_212223.csv (text/comma-separated-values) 25990 bytes.
+README.txt (text/plain) 14352 bytes.
+irrigation_212223.csv (text/comma-separated-values) 19700 bytes.
+Summary_sensors.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) 11382 bytes.
